@@ -1,0 +1,487 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!-- Title -->
+   <title>MyBlog-Dynamic Programming</title>
+   <!-- Favicon -->
+
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+   <!--Responsive Menu  CSS -->
+   <link rel="stylesheet" href="../assets/css/responsive-menu.css" />
+   <!-- lightbox CSS -->
+   <link rel="stylesheet" href="../assets/css/lightbox.min.css">
+   <!-- Prism CSS -->
+   <link rel="stylesheet" href="../assets/css/prism.css">
+   <!-- Owl carousel CSS -->
+   <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+   <!-- Font awesome CSS -->
+   <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
+   <!-- Aos CSS -->
+   <link rel="stylesheet" href="../assets/css/aos.css">
+   <!-- Main CSS -->
+   <link rel="stylesheet" href="../assets/css/style.css">
+   <!-- Google font -->
+   <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet">
+</head>
+<body>
+<!-- ==================== PRELOADER HERE ===================================== -->
+<div class="overlay-loader">
+   <img src="../assets/images/805.gif" alt="loader" />
+</div>
+<!-- ==================== PRELOADER END ===================================== -->
+<!-- ======================== START HEADER AREA HERE ====================================== -->
+<header class="themeix-header  clearfix">
+   <div class="themeix-header-navigation bg-color">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-12">
+               <div class="themeix-navbar">
+                  <div class="themeix-logo float-left">
+                     <a class="themeix-brand" href="/"><img src="../assets/images/logo-white.png" alt="Header Logo"></a>
+                  </div>
+                  <div class="header-container highlight">
+                     <nav class="themeix-menu float-right">
+                        <ul id="navigation-menu" class="slimmenu">
+                           <li><a href="/">Home</a></li>
+                           <!--                                 <li><a href="/picture">Pictrue</a></li>-->
+                           <li class="has-submenu">
+                                    <a href="/tags">Articles</a>
+                                    <ul>
+                                       <li><a href="/algorithm">Algorithm</a></li>
+                                       <li><a href="/linux">Linux</a></li>
+                                 <li><a href="/cpp">Cpp</a></li>
+                                 <li><a href="/web">Web</a></li>
+                                 <li><a href="/deeplearning">Deep Learning</a></li>
+                                    </ul>
+                                 </li>
+                           <li><a href="/video">Video</a></li>
+                           <li class="has-submenu">
+                              <a href="/author">Author</a>
+                              <ul>
+                                 <li><a href="/author">Author Page</a></li>
+                                 <li><a href="/cv">CV</a></li>
+                                 <!-- <li><a href="/contact">Message</a></li> -->
+                              </ul>
+                           </li>
+                        </ul>
+                        <div class="navigation-sidebar">
+                           <button class="openbtn" onclick="openNav()"><img src="../assets/images/menu-icon.png" alt="menu-icon" /></button>
+                        </div>
+                     </nav>
+
+                     <div id="mySidepanel" class="sidepanel">
+                        <ul class="list-inline pt-4">
+                           <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
+                           <li><a href="/login">Login</a></li>
+                           <li><a href="/register">Register</a></li>
+
+                        </ul>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="header-bottom page-title">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-9 mx-auto">
+               <div class="header-text text-center">
+                  <span>22 March, 2022</span>
+                  <h1 class="heading-1 mb-5 pt-1" data-aos="zoom-in">动态规划由浅入深</h1>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="header-shape">
+      <img class="shape1" src="../assets/images/Shape_01.png" alt="shape animated"/>
+      <img class="shape2" src="../assets/images/Shape_02.png" alt="shape animated"/>
+      <img class="shape3" src="../assets/images/Shape_03.png" alt="shape animated"/>
+   </div>
+</header>
+<!-- ======================== END HEADER AREA HERE ================================= -->
+<!-- =================== START MAIN CONTENT AREA HERE ========================-->
+<main class="main-content-area section-padding-bottom">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="row">
+               <div class="col-md-10 mx-auto n-margin">
+                  <div class="entry-content">
+                     <h2 class="heading-2">动态规划解题基本步骤</h2>
+                        <p>1. 定义数组的含义<br>
+                           2. 明确动态规划转移方程<br>
+                           3. 找到初始值
+                        </p>
+                        <br>
+                     <h2 class="heading-2">动态规划问题分类</h2>
+                     <br>
+                     <h3 class="heading-3">不同路径</h3>
+                     <br>
+                     <figure class="image-medium"><img src="../assets/images/dynamic-programming-1.jpg" alt="blog-img" /></figure>
+                     <p>一个机器人位于一个 m x n 网格的左上角。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角。问总共有多少条不同的路径？</p>
+                     <p>方法：定义dp[i][j]表示机器人在走到网格i, j时所有可能的方法数，其中i = 0 or j = 0时方法数都为1。</p>
+                     <p>状态转移方程为:</p>
+                     <blockquote><p>dp[i][j] = dp[i-1][j] + dp[i][j-1] (i > 0, j > 0)</p></blockquote>
+
+<pre class=" language-javascript mb-60"><code class=" language-javascript">// 2d vector version
+int uniquePaths(int m, int n) {
+   vector&ltvector&ltint&gt&gt dp(m, vector&ltint&gt(n, 0));
+   for (int i = 0; i < m; ++i) {
+      dp[i][0] = 1;
+   }
+   for (int j = 0; j < n; ++j) {
+      dp[0][j] = 1;
+   }
+   for(int i = 1; i < m; i++) {
+      for(int j = 1; j < n; j++) {
+         dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+      }
+   }
+   return dp[m - 1][n - 1];
+}
+// Time Complexity: O(N*M) 
+// Auxiliary Space: O(N*M)
+</code></pre>
+                  <p>可以把dp压缩到一维数组</p>
+
+<pre class=" language-javascript mb-60"><code class=" language-javascript">// simplified 1d vector version
+int uniquePaths(int m, int n) {
+   vector&ltint&gt dp(n, 0);
+   dp[0] = 1;
+   for(int i = 0; i < m; i++) {
+      for(int j = 1; j < n; j++) {
+         dp[j] += dp[j - 1];
+      }
+   }
+   return dp[n - 1];
+}
+// Time Complexity: O(N*M) 
+// Auxiliary Space: O(N)
+</code></pre>
+                     <br>
+                     <h3 class="heading-3">不同路径(障碍)</h3>
+                     <br>
+                     <figure class="image-medium"><img src="../assets/images/dynamic-programming-1.jpg" alt="blog-img" /></figure>
+                     <p>一个机器人位于一个 m x n 网格的左上角。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角。现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？</p>
+                     <p>方法：定义dp[i][j]表示机器人在走到网格i, j时所有可能的方法数，其中i = 0 or j = 0时，需要对dp[0][j]和dp[i][0]这两条路径的初始状态进行定义，在从dp[0][0]一种向下或者一直向右走的时候，如果遇到障碍，则后面的点都无法从dp[0][0]到达。</p>
+                     <p>初始状态定义为：</p>
+                     <blockquote>
+                        <p>for (int i = 0; i < m && obstacleGrid[i][0] == 0; i++) dp[i][0] = 1;<br>
+                        for (int j = 0; j < n && obstacleGrid[0][j] == 0; j++) dp[0][j] = 1;</p>
+                     </blockquote>
+                     <p>在遍历的过程中，如果该点有障碍，则方法数为0，无障碍则按照状态转移方程遍历:</p>
+                     <blockquote><p>if(obstacleGrid[i][j] == 0) dp[i][j] = dp[i - 1][j] + dp[i][j - 1]</p></blockquote>
+
+<pre class=" language-javascript mb-60"><code class=" language-javascript">// 2d vector version
+int uniquePathsWithObstacles(vector&ltvector&ltint&gt&gt& obstacleGrid) {
+   int m = obstacleGrid.size();
+   int n = obstacleGrid[0].size();
+   vector&ltvector&ltint&gt&gt dp(m, vector<int>(n, 0));
+   for(int i = 0; i < m; i++) {
+         if(obstacleGrid[i][0] == 1) break;
+         dp[i][0] = 1;
+   }
+   for(int i = 0; i < n; i++) {
+         if(obstacleGrid[0][i] == 1) break;
+         dp[0][i] = 1;
+   }
+
+   for(int i = 1; i < m; i++) {
+         for(int j = 1; j < n; j++) {
+            if(obstacleGrid[i][j] == 0) {
+               dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            }
+         }
+   }
+   return dp[m - 1][n - 1];
+}
+// Time Complexity: O(N*M) 
+// Auxiliary Space: O(N*M)
+</code></pre>
+                  <p>可以把dp压缩到一维数组</p>
+
+<pre class=" language-javascript mb-60"><code class=" language-javascript">// simplified 1d vector version
+int uniquePathsWithObstacles(vector&ltvector&ltint&gt&gt& obstacleGrid) {
+   int m = obstacleGrid.size();
+   int n = obstacleGrid[0].size();
+   vector&ltint&gt dp(n);
+   dp[0] = obstacleGrid[0][0] == 0 ? 1: 0;
+
+   for(int i = 0; i < m; i++) {
+         for(int j = 0; j < n; j++) {
+            if(obstacleGrid[i][j] == 1) {
+               dp[j] = 0;
+            }
+            else if(j > 0) {
+               dp[j] += dp[j - 1];
+            }
+         }
+   }
+   return dp[n - 1];
+}
+// Time Complexity: O(N*M) 
+// Auxiliary Space: O(N)
+</code></pre>
+                     <br>
+                     <h3 class="heading-3">01背包(01 Knapsack Problem)</h3>
+                     <br>
+                     <figure class="image-medium"><img src="../assets/images/dynamic-programming-2.jpg" alt="blog-img" /></figure>
+                     <p>01的意思是，每种物品只会放入背包0个或者一个。假设一共有N件物品，第i件物品的重量为weights[i]，价值为values[i]。在总重量不超过背包承载上限W的情况下，此时能够装入背包的最大价值是多少？</p>
+                     <p>方法：定义dp[i][j]为将前i件物品装进限重为j的背包可以获得的最大价值，在没有装入物品时的最大价值为0，在考虑i时，根据目前的重量j，有可能装入和不可能装入两种情况：</p>
+                     <p>1. 如果weights[i] <= j, 可能能装入，状态转移方程为:</p>
+                     <blockquote><p>dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weights[i - 1]] + values[i - 1])</p></blockquote>
+                     <p>2. 如果weights[i] > j, 不可能装入，状态转移方程为:</p>
+                     <blockquote><p>dp[i][j] = dp[i][j - 1]</p></blockquote>
+
+<pre class=" language-javascript mb-60"><code class=" language-javascript">// 2d vector version
+int zero_one_package(vector&ltint&gt weights, vector&ltint&gt values, int w) {
+   int n = weights.size();
+   vector&ltvector&ltint&gt&gt dp(n + 1, vector&ltint&gt(w + 1));
+   for(int i = 0; i < n; i++) {
+      for(int j = 0; j < w; j++) {
+         if(i == 0 || j == 0) {
+            dp[i][j] == 0;
+         }
+         else if(weights[i - 1] <= j) {
+            dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - weights[i - 1]] + values[i - 1]);
+         }
+         else {
+            dp[i][j] = dp[i - 1][j];
+         }
+      }
+   }
+   return dp[n][w];
+}
+// Time Complexity: O(N*W) 
+// Auxiliary Space: O(N*W)
+</code></pre>
+                  <p>可以把dp压缩到一维数组，需要在循环j时进行逆向枚举。</p>
+
+<pre class=" language-javascript mb-60"><code class=" language-javascript">// simplified 1d vector version
+int zero_one_package(vector&ltint&gt weights, vector&ltint&gt values, int w) {
+   int n = weights.size();
+   vector&ltint&gt dp(w + 1， 0);
+   for(int i = 0; i < n; i++) {
+      for(int j = w - 1; j >= weights[i]; j--) {
+         dp[j] = max(dp[j], dp[j - weights[i]] + values[i]);
+      }
+   }
+   return dp[w];
+}
+// Time Complexity: O(N*W) 
+// Auxiliary Space: O(W)
+</code></pre>
+                     <br>
+                     <h3 class="heading-3">无限背包问题(Unbounded Knapsack Problem)</h3>
+                     <br>
+                     <figure class="image-medium"><img src="../assets/images/dynamic-programming-3.jpg" alt="blog-img" /></figure>
+                     <p>无限背包问题于01背包问题类型相似，不同之处在于物品有许多种类，每种物品都无限量供应。</p>
+                     <p>方法一：仿照01背包，同样地去定义dp[i][j],不同在于可以多次装入一种物品，动态转移方程为：</p>
+                     <blockquote>
+                        <p>if(j >= weights[i - 1]) dp[i][j] = max(dp[i - 1][j], dp[i][j - weights[i - 1]] + values[i - 1])</p>
+                        <p>else dp[i][j] = dp[i - 1][j]</p>
+                     </blockquote>
+                     
+<pre class=" language-javascript mb-60"><code class=" language-javascript">// 2d vector version
+int zero_one_package(vector&ltint&gt weights, vector&ltint&gt values, int w) {
+   int n = weights.size();
+   vector&ltvector&ltint&gt&gt dp(n + 1, vector&ltint&gt(w + 1));
+   for(int i = 0; i < n; i++) {
+      for(int j = 0; j < w; j++) {
+         if(i == 0 || j == 0) {
+            dp[i][j] == 0;
+         }
+         else if(weights[i - 1] <= j) {
+            dp[i][j] = max(dp[i - 1][j], dp[i][j - weights[i - 1]] + values[i - 1]);
+         }
+         else {
+            dp[i][j] = dp[i - 1][j];
+         }
+      }
+   }
+   return dp[n][w];
+}
+// Time Complexity: O(N*W) 
+// Auxiliary Space: O(N*W)
+</code></pre>
+                  <p>可以把dp压缩到一维数组，需要在循环j时进行正向枚举。</p>
+
+<pre class=" language-javascript mb-60"><code class=" language-javascript">// simplified 1d vector version
+int zero_one_package(vector&ltint&gt weights, vector&ltint&gt values, int w) {
+   int n = weights.size();
+   vector&ltint&gt dp(w + 1， 0);
+   for(int i = 0; i < n; i++) {
+      for(int j = weights[i]; j < w; j++) {
+         dp[j] = max(dp[j], dp[j - weights[i]] + values[i]);
+      }
+   }
+   return dp[w];
+}
+// Time Complexity: O(N*W) 
+// Auxiliary Space: O(W)
+</code></pre>   
+
+                     <p>方法二：仿照01背包，同样地去定义dp[i][j],去逆向枚举，并考虑每种取物品的数量x∈[0, j//weights[i]]，动态转移方程为：</p>
+                     <blockquote>
+                        <p>dp[i][j] = max(dp[i - 1][j - x*weights[i]] + x*values[i])</p>
+                     </blockquote>
+
+<pre class=" language-javascript mb-60"><code class=" language-javascript">// simplified 1d vector version
+   int zero_one_package(vector&ltint&gt weights, vector&ltint&gt values, int w) {
+      int n = weights.size();
+      vector&ltint&gt dp(w + 1， 0);
+      for(int i = 0; i < n; i++) {
+         for(int j = w - 1; j >= weights[i]; j++) {
+            int x = j / weights[i];
+            for(int k = 0; k < x; k++) {
+               dp[j] = max(dp[j], dp[j - k * weights[i]] + k * values[i]);
+            }
+         }
+      }
+      return dp[w];
+   }
+   // Time Complexity: O(N*W*X) 
+   // Auxiliary Space: O(W)
+</code></pre>  
+
+                  </div>
+                  <div class="tags-social-meta mb-5 row">
+                     <div class="col-md-6">
+                        <div class="tags">
+                           <span class="float-left"><i class="fa fa-tag" aria-hidden="true"></i> Tags:</span>
+                           <ul class="list-inline">
+                              <li class="list-inline-item"><a href="/algorithm">Algorithm</a></li>
+                              <li class="list-inline-item"><a href="/cpp">Cpp</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="social-icon float-md-right">
+                           <span class="float-left"></span>
+                           <ul class="list-inline float-left">
+                              <button class="button" onclick="copyToClip('test')">Share it!</button>
+                              <script>
+                                 function copyToClip(content, message) {
+                                    var aux = document.createElement("input");
+                                    aux.setAttribute("value", content);
+                                    document.body.appendChild(aux);
+                                    aux.select();
+                                    document.execCommand("copy");
+                                    document.body.removeChild(aux);
+                                    if (message == null) {
+                                       alert("The link to this page has been successfully copied to the clipboard!");
+                                    } else {
+                                       alert(message);
+                                    }
+                                 }
+                              </script>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="comment-wrapper">
+                     <div class="section-title mb-4 mt-4">
+                        <h3 class="heading-3">Post a Comment</h3>
+                     </div>
+                     <div class="comment-form">
+                           <form action="" method="post">                                    
+                                 <div class="form-row">
+                           <div class="col-md-6">
+                          <div class="input-group"><input type="text" maxlength="30" name="name" placeholder="Your Name" /></div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="input-group"><input type="text" maxlength="30" name="email" placeholder="Your Email" class="float-right" /></div>
+                        </div>
+                       </div>
+                        <div class="form-row"><div class="col-md-12"><div class="form-group"><textarea name="comment_content" placeholder="Type Comment" maxlength="500"></textarea></div></div></div>
+                        <script>
+                           function CommentComplete()
+                           {
+                              alert("Comment success!");
+                           }
+                        </script>
+                                 <div class="form-row"><button type="submit" class="btn-submit mt-2" onclick="CommentComplete()">Add Comment</button></div>
+                           </form>								 
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</main>
+<!-- ======================== END MAIN CONTENT AREA HERE ========================-->
+<!-- ==================== START FOOTER AREA ===================================== -->
+<footer>
+   <div class="footer-area clearfix ">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-6">
+               <div class="row">
+                  <div class="col-sm-6">
+                     <div class="footer-widget">
+                        <div class="footer-logo-img pb-3">
+                           <a href="/"><img src="../assets/images/logo.png" alt="footer-logo" /></a>
+                        </div>
+                        <div class="widget-details">
+                           <p>Follow me!</p>
+                           <div class="social-icon">
+                              <ul class="list-inline">
+                                 <li><a href="https://github.com/zhangbc12">
+                                    <img src="../assets/images/github-logo.png" />
+                                 </a></li>
+                                 <li><a href="https://www.instagram.com/z_100c/">
+                                    <img src="../assets/images/instagram-logo.png" />
+                                 </a></li>
+                                 <li><a href="https://facebook.com/zhangbaichuan12">
+                                    <img src="../assets/images/facebook-logo.png" />
+                                 </a></li>
+                                 <li><a href="https://twitter.com/BaichuanZhang6">
+                                    <img src="../assets/images/twitter-logo.png" />
+                                 </a></li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col">
+         <div class="footer-bottom text-center">
+            <p>MyBlog demo -Bc</p>
+         </div>
+      </div>
+   </div>
+</footer>
+<!-- ==================== END FOOTER AREA HERE ===================================== -->
+<!-- ====================ALL JS FILE HERE===================================== -->
+<!-- jQuery -->
+<script src="../assets/js/jquery-3.3.1.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="../assets/js/bootstrap.min.js"></script>
+<!-- responsive-menu. -->
+<script src="../assets/js/responsive-menu.js"></script>
+<!-- scrollUp  JS -->
+<script src="../assets/js/jquery.scrollUp.min.js"></script>
+<!-- lightbox js -->
+<script src="../assets/js/lightbox.min.js"></script>
+<!-- carousel js -->
+<script src="../assets/js/owl.carousel.min.js"></script>
+<!-- wow JS -->
+<script src="../assets/js/aos.min.js"></script>
+<!-- main  JS -->
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

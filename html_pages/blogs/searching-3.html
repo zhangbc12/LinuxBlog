@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!-- Title -->
+   <title>MyBlog-Searching-3</title>
+   <!-- Favicon -->
+
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+   <!--Responsive Menu  CSS -->
+   <link rel="stylesheet" href="../assets/css/responsive-menu.css" />
+   <!-- lightbox CSS -->
+   <link rel="stylesheet" href="../assets/css/lightbox.min.css">
+   <!-- Prism CSS -->
+   <link rel="stylesheet" href="../assets/css/prism.css">
+   <!-- Owl carousel CSS -->
+   <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+   <!-- Font awesome CSS -->
+   <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
+   <!-- Aos CSS -->
+   <link rel="stylesheet" href="../assets/css/aos.css">
+   <!-- Main CSS -->
+   <link rel="stylesheet" href="../assets/css/style.css">
+   <!-- Google font -->
+   <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet">
+</head>
+<body>
+<!-- ==================== PRELOADER HERE ===================================== -->
+<div class="overlay-loader">
+   <img src="../assets/images/805.gif" alt="loader" />
+</div>
+<!-- ==================== PRELOADER END ===================================== -->
+<!-- ======================== START HEADER AREA HERE ====================================== -->
+<header class="themeix-header  clearfix">
+   <div class="themeix-header-navigation bg-color">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-12">
+               <div class="themeix-navbar">
+                  <div class="themeix-logo float-left">
+                     <a class="themeix-brand" href="/"><img src="../assets/images/logo-white.png" alt="Header Logo"></a>
+                  </div>
+                  <div class="header-container highlight">
+                     <nav class="themeix-menu float-right">
+                        <ul id="navigation-menu" class="slimmenu">
+                           <li><a href="/">Home</a></li>
+                           <!--                                 <li><a href="/picture">Pictrue</a></li>-->
+                           <li class="has-submenu">
+                                    <a href="/tags">Articles</a>
+                                    <ul>
+                                       <li><a href="/algorithm">Algorithm</a></li>
+                                       <li><a href="/linux">Linux</a></li>
+                                 <li><a href="/cpp">Cpp</a></li>
+                                 <li><a href="/web">Web</a></li>
+                                 <li><a href="/deeplearning">Deep Learning</a></li>
+                                    </ul>
+                                 </li>
+                           <li><a href="/video">Video</a></li>
+                           <li class="has-submenu">
+                              <a href="/author">Author</a>
+                              <ul>
+                                 <li><a href="/author">Author Page</a></li>
+                                 <li><a href="/cv">CV</a></li>
+                                 <!-- <li><a href="/contact">Message</a></li> -->
+                              </ul>
+                           </li>
+                        </ul>
+                        <div class="navigation-sidebar">
+                           <button class="openbtn" onclick="openNav()"><img src="../assets/images/menu-icon.png" alt="menu-icon" /></button>
+                        </div>
+                     </nav>
+
+                     <div id="mySidepanel" class="sidepanel">
+                        <ul class="list-inline pt-4">
+                           <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
+                           <li><a href="/login">Login</a></li>
+                           <li><a href="/register">Register</a></li>
+
+                        </ul>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="header-bottom page-title">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-9 mx-auto">
+               <div class="header-text text-center">
+                  <span>19 March, 2022</span>
+                  <h1 class="heading-1 mb-5 pt-1" data-aos="zoom-in">搜索算法Ⅲ-Local Search</h1>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="header-shape">
+      <img class="shape1" src="../assets/images/Shape_01.png" alt="shape animated"/>
+      <img class="shape2" src="../assets/images/Shape_02.png" alt="shape animated"/>
+      <img class="shape3" src="../assets/images/Shape_03.png" alt="shape animated"/>
+   </div>
+</header>
+<!-- ======================== END HEADER AREA HERE ================================= -->
+<!-- =================== START MAIN CONTENT AREA HERE ========================-->
+<main class="main-content-area section-padding-bottom">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="row">
+               <div class="col-md-10 mx-auto n-margin">
+                  <div class="entry-content">
+                     <h2 class="heading-2">Searching Problem的分类与定义</h2>
+                        <p>搜索的问题根据搜索的条件、限制和目标的不同，可以有以下几类定义:<br>
+                           1. Uninformed Search(盲目搜索)<br>
+                           2. Informed Search(知情搜索)<br>
+                           3. Local Search(局部搜索)<br>
+                        </p>
+                        <p>要解决搜索问题，首先需要明白如何去定义这个问题<br>
+                           1. States: 构成状态的详细信息<br>
+                           2. Initial state: 初始状态<br>
+                           3. Actions: 可以进行的操作<br>
+                           4. Transition: 状态的转移<br>
+                           5. Cost: 路径的成本函数<br> 
+                           解决搜索问题的方案就是将初始状态转换为目标状态的一系列动作。
+                        </p>
+                        <br>
+                     <h2 class="heading-2">Local Search</h2>
+                     <p>Local Search局部搜索从一个初始解出发，然后搜索解的邻域，如有更优的解则移动至该解并继续执行搜索，否则返回当前解。局部搜索适合用于寻找目标状态的问题，具有所需内存低，能在大的空间中找到解决方案的优点。</p>
+                     <p>Local Search通常伴随着搜索的限制满足条件(Constraint Satisfaction Problems)，在逐步构建解决方案的过程中，如果其中一种解决方案不满足限制条件，则立即放弃该解，进行回溯。</p>
+                     <br>
+                     <h3 class="heading-3">Backtracking Search</h3>
+                     <br>
+                     <div class="col-md-8 mb-60">
+                        <figure class="image-medium"><img src="../assets/images/searching-3-1.jpg" alt="blog-img" /></figure>
+                     </div>
+                     <p>Backtracking Search回溯是一种递归解决问题的算法技术，通过尝试逐步构建解决方案，删除那些在任何时间点都不能满足问题约束的解决方案。</p>
+                     <p>以<a href="https://leetcode.com/problems/combination-sum/">组合总数</a>这个问题为例，一个无重复元素的整数数组 candidates 和一个目标整数 target ，找出 candidates 中可以使数字和为目标数 target 的所有不同组合 ，并以列表形式返回。</p>
+                     <p>candidates 中的同一个数字可以无限制重复被选取 。如果至少一个数字的被选数量不同，则两种组合是不同的。 </p>
+<pre class=" language-javascript mb-60"><code class=" language-javascript">// combination-sum
+vector&ltvector&ltint&gt&gt ans;
+vector&ltint&gt path;
+void backTrack(vector&ltint&gt& candidates, int idx, int target, int sum) {
+   if(sum == target) {
+      ans.push_back(path);
+      return;
+   }
+   else if(sum > target) {
+      return;
+   }
+   // 从idx开始
+   for(int i = idx; i < candidates.size(); i++) {
+      path.push_back(candidates[i]);
+      sum += candidates[i];
+      backTrack(candidates, i, target, sum); // i表示该数字可以无限制被重复选取
+      path.pop_back();
+      sum -= candidates[i];
+   }
+}
+vector&ltvector&ltint&gt&gt combinationSum(vector&ltint&gt& candidates, int target) {
+   backTrack(candidates, 0, target, 0);
+   return ans;
+}
+</code></pre>
+
+                     <br>
+                     <h3 class="heading-3">Backtracking Search+Pruning</h3>
+                     <p>Pruning剪枝就是在搜索过程中来剪去不符合限制条件的搜索路径，来避免了一些不必要的搜索。</p>
+                     <p>以<a href="https://leetcode.com/problems/combination-sum-ii/">组合总数Ⅱ</a>这个问题为例，给定一个候选人编号的集合 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。</p>
+                     <p>candidates 中的每个数字在每个组合中只能使用一次，且解集不能包含重复的组合。</p>
+<pre class=" language-javascript mb-60"><code class=" language-javascript">// combination-sum-ii
+vector&ltvector&ltint&gt&gt ans;
+vector&ltint&gt path;
+vector&ltbool&gt visited;
+void backTrack(vector&ltint&gt& candidates, int idx, int target, int sum) {
+   if(sum == target) {
+      ans.push_back(path);
+      return;
+   }
+   else if(sum > target) {
+      return;
+   }
+   for(int i = idx; i < candidates.size(); i++) {
+      // 如果该元素和前一个元素相等，且前一个元素没有使用，进行剪枝，避免重复
+      if(i > 0 && candidates[i] == candidates[i - 1] && visited[i - 1] == false) {
+         continue;
+      }
+      path.push_back(candidates[i]);
+      sum += candidates[i];
+      visited[i] = true;
+      backTrack(candidates, i + 1, target, sum);
+      path.pop_back();
+      sum -= candidates[i];
+      visited[i] = false;
+   }
+}
+vector&ltvector&ltint&gt&gt combinationSum2(vector&ltint&gt& candidates, int target) {
+   // 对数组进行排序
+   sort(candidates.begin(), candidates.end());
+   // 记录数组中元素的是否被使用过
+   visited = vector<bool>(candidates.size(), false);
+   backTrack(candidates, 0, target, 0);
+   return ans;
+}
+</code></pre>
+
+                     <br>
+                     <h3 class="heading-3">N-Queens</h3>
+                     <p>接下来看一下<a href="https://leetcode.com/problems/n-queens/">N皇后</a>这个经典的回溯问题。</p>
+                     <figure class="image-medium"><img src="../assets/images/queens.jpg" alt="blog-img" /></figure>
+                     <br>
+                     <p>N皇后问题研究的是如何将N个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。</p>
+                     <p>给定一个整数 n ，返回所有不同的 n 皇后问题的解决方案。</p>
+
+<pre class=" language-javascript mb-60"><code class=" language-javascript">// N-Queues
+vector&ltint&gt queens;
+unordered_set&ltint&gt columns;
+unordered_set&ltint&gt diagonals;
+unordered_set&ltint&gt off_diagonals;
+vector&ltvector&ltstring&gt&gt ans;
+
+void backTrack(int row, int n) {
+   if(row == n) {
+      generateAns(queens, n);
+      return;
+   }
+   for(int i = 0; i < n; i++) {
+      if(columns.find(i) != columns.end()) {
+         continue;
+      }
+      int d = row - i;
+      if(diagonals.find(d) != diagonals.end()) {
+         continue;
+      }
+      int off_d = row + i;
+      if(off_diagonals.find(off_d) != off_diagonals.end()) {
+         continue;
+      }
+      queens[row] = i;
+      columns.insert(i);
+      diagonals.insert(d);
+      off_diagonals.insert(off_d);
+      backTrack(row + 1, n);
+      queens[row] = -1;
+      columns.erase(i);
+      diagonals.erase(d);
+      off_diagonals.erase(off_d);
+   }
+}
+
+vector&ltvector&ltstring&gt&gt solveNQueens(int n) {
+   queens = vector&ltint&gt(n);
+   backTrack(0, n);
+   return ans;
+}
+
+void generateAns(vector&ltint&gt &queens, int n) {
+   vector&ltstring&gt v(n);
+   for(int i = 0; i < n; i++) {
+      string str(n, '.');
+      int row = queens[i];
+      str[row] = 'Q';
+      v[i] = str;
+   }
+   ans.push_back(v);
+}
+</code></pre>
+                  
+                  <br>
+                  </div>
+                  <div class="tags-social-meta mb-5 row">
+                     <div class="col-md-6">
+                        <div class="tags">
+                           <span class="float-left"><i class="fa fa-tag" aria-hidden="true"></i> Tags:</span>
+                           <ul class="list-inline">
+                              <li class="list-inline-item"><a href="/algorithm">Algorithm</a></li>
+                              <li class="list-inline-item"><a href="/deeplearning">Deep Learning</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="social-icon float-md-right">
+                           <span class="float-left"></span>
+                           <ul class="list-inline float-left">
+                              <button class="button" onclick="copyToClip('test')">Share it!</button>
+                              <script>
+                                 function copyToClip(content, message) {
+                                    var aux = document.createElement("input");
+                                    aux.setAttribute("value", content);
+                                    document.body.appendChild(aux);
+                                    aux.select();
+                                    document.execCommand("copy");
+                                    document.body.removeChild(aux);
+                                    if (message == null) {
+                                       alert("The link to this page has been successfully copied to the clipboard!");
+                                    } else {
+                                       alert(message);
+                                    }
+                                 }
+                              </script>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="comment-wrapper">
+                     <div class="section-title mb-4 mt-4">
+                        <h3 class="heading-3">Post a Comment</h3>
+                     </div>
+                     <div class="comment-form">
+                           <form action="" method="post">                                    
+                                 <div class="form-row">
+                           <div class="col-md-6">
+                          <div class="input-group"><input type="text" maxlength="30" name="name" placeholder="Your Name" /></div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="input-group"><input type="text" maxlength="30" name="email" placeholder="Your Email" class="float-right" /></div>
+                        </div>
+                       </div>
+                        <div class="form-row"><div class="col-md-12"><div class="form-group"><textarea name="comment_content" placeholder="Type Comment" maxlength="500"></textarea></div></div></div>
+                        <script>
+                           function CommentComplete()
+                           {
+                              alert("Comment success!");
+                           }
+                        </script>
+                                 <div class="form-row"><button type="submit" class="btn-submit mt-2" onclick="CommentComplete()">Add Comment</button></div>
+                           </form>								 
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</main>
+<!-- ======================== END MAIN CONTENT AREA HERE ========================-->
+<!-- ==================== START FOOTER AREA ===================================== -->
+<footer>
+   <div class="footer-area clearfix ">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-6">
+               <div class="row">
+                  <div class="col-sm-6">
+                     <div class="footer-widget">
+                        <div class="footer-logo-img pb-3">
+                           <a href="/"><img src="../assets/images/logo.png" alt="footer-logo" /></a>
+                        </div>
+                        <div class="widget-details">
+                           <p>Follow me!</p>
+                           <div class="social-icon">
+                              <ul class="list-inline">
+                                 <li><a href="https://github.com/zhangbc12">
+                                    <img src="../assets/images/github-logo.png" />
+                                 </a></li>
+                                 <li><a href="https://www.instagram.com/z_100c/">
+                                    <img src="../assets/images/instagram-logo.png" />
+                                 </a></li>
+                                 <li><a href="https://facebook.com/zhangbaichuan12">
+                                    <img src="../assets/images/facebook-logo.png" />
+                                 </a></li>
+                                 <li><a href="https://twitter.com/BaichuanZhang6">
+                                    <img src="../assets/images/twitter-logo.png" />
+                                 </a></li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col">
+         <div class="footer-bottom text-center">
+            <p>MyBlog demo -Bc</p>
+         </div>
+      </div>
+   </div>
+</footer>
+<!-- ==================== END FOOTER AREA HERE ===================================== -->
+<!-- ====================ALL JS FILE HERE===================================== -->
+<!-- jQuery -->
+<script src="../assets/js/jquery-3.3.1.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="../assets/js/bootstrap.min.js"></script>
+<!-- responsive-menu. -->
+<script src="../assets/js/responsive-menu.js"></script>
+<!-- scrollUp  JS -->
+<script src="../assets/js/jquery.scrollUp.min.js"></script>
+<!-- lightbox js -->
+<script src="../assets/js/lightbox.min.js"></script>
+<!-- carousel js -->
+<script src="../assets/js/owl.carousel.min.js"></script>
+<!-- wow JS -->
+<script src="../assets/js/aos.min.js"></script>
+<!-- main  JS -->
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

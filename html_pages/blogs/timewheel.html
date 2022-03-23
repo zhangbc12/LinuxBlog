@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!-- Title -->
+   <title>MyBlog-TimeWheel</title>
+   <!-- Favicon -->
+
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+   <!--Responsive Menu  CSS -->
+   <link rel="stylesheet" href="../assets/css/responsive-menu.css" />
+   <!-- lightbox CSS -->
+   <link rel="stylesheet" href="../assets/css/lightbox.min.css">
+   <!-- Prism CSS -->
+   <link rel="stylesheet" href="../assets/css/prism.css">
+   <!-- Owl carousel CSS -->
+   <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+   <!-- Font awesome CSS -->
+   <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
+   <!-- Aos CSS -->
+   <link rel="stylesheet" href="../assets/css/aos.css">
+   <!-- Main CSS -->
+   <link rel="stylesheet" href="../assets/css/style.css">
+   <!-- Google font -->
+   <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet">
+</head>
+<body>
+<!-- ==================== PRELOADER HERE ===================================== -->
+<div class="overlay-loader">
+   <img src="../assets/images/805.gif" alt="loader" />
+</div>
+<!-- ==================== PRELOADER END ===================================== -->
+<!-- ======================== START HEADER AREA HERE ====================================== -->
+<header class="themeix-header  clearfix">
+   <div class="themeix-header-navigation bg-color">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-12">
+               <div class="themeix-navbar">
+                  <div class="themeix-logo float-left">
+                     <a class="themeix-brand" href="/"><img src="../assets/images/logo-white.png" alt="Header Logo"></a>
+                  </div>
+                  <div class="header-container highlight">
+                     <nav class="themeix-menu float-right">
+                        <ul id="navigation-menu" class="slimmenu">
+                           <li><a href="/">Home</a></li>
+                           <!--                                 <li><a href="/picture">Pictrue</a></li>-->
+                           <li class="has-submenu">
+                                    <a href="/tags">Articles</a>
+                                    <ul>
+                                       <li><a href="/algorithm">Algorithm</a></li>
+                                       <li><a href="/linux">Linux</a></li>
+                                 <li><a href="/cpp">Cpp</a></li>
+                                 <li><a href="/web">Web</a></li>
+                                 <li><a href="/deeplearning">Deep Learning</a></li>
+                                    </ul>
+                                 </li>
+                           <li><a href="/video">Video</a></li>
+                           <li class="has-submenu">
+                              <a href="/author">Author</a>
+                              <ul>
+                                 <li><a href="/author">Author Page</a></li>
+                                 <li><a href="/cv">CV</a></li>
+                                 <!-- <li><a href="/contact">Message</a></li> -->
+                              </ul>
+                           </li>
+                        </ul>
+                        <div class="navigation-sidebar">
+                           <button class="openbtn" onclick="openNav()"><img src="../assets/images/menu-icon.png" alt="menu-icon" /></button>
+                        </div>
+                     </nav>
+
+                     <div id="mySidepanel" class="sidepanel">
+                        <ul class="list-inline pt-4">
+                           <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
+                           <li><a href="/login">Login</a></li>
+                           <li><a href="/register">Register</a></li>
+
+                        </ul>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="header-bottom page-title">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-9 mx-auto">
+               <div class="header-text text-center">
+                  <span>22 March, 2022</span>
+                  <h1 class="heading-1 mb-5 pt-1" data-aos="zoom-in">时间轮定时器算法</h1>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="header-shape">
+      <img class="shape1" src="../assets/images/Shape_01.png" alt="shape animated"/>
+      <img class="shape2" src="../assets/images/Shape_02.png" alt="shape animated"/>
+      <img class="shape3" src="../assets/images/Shape_03.png" alt="shape animated"/>
+   </div>
+</header>
+<!-- ======================== END HEADER AREA HERE ================================= -->
+<!-- =================== START MAIN CONTENT AREA HERE ========================-->
+<main class="main-content-area section-padding-bottom">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="row">
+               <div class="col-md-10 mx-auto n-margin">
+                  <div class="entry-content">
+                     <h2 class="heading-2">时间轮算法处理非活动http连接</h2>
+                        <p>在http中在客户端向正在监听的Linux服务器发送请求时，使用Epoll的I/O事件通知机制，epollcreate方法，服务器内核会为每一个新的请求创建一个新的epollevent，再进行读写事件。虽然Epoll的性能很高，但是如果当用户连接到服务器，且长时间没有进行数据交换
+                           就会一直占用着Linux服务器的文件描述符，造成资源的浪费。把超过一段时间没有活动的客户端连接定义为非活动连接，然后使用定时器来释放非活动的连接<br>        
+                        </p>
+                        <h3 class="heading-3">定时器处理连接流程</h3>
+                           <p>1.在处理新的客户端请求时，将客户端连接的文件描述符，超时时间绑定到一个新创建的定时器中，从此时开始计时。</p>
+                           <p>2.如果该连接在未超时这个过程中再次发送请求，更新超时时间</p>
+                           <p>3.该连接长时间为活动，超时后从内核事件表删除事件，关闭对应的文件描述符，释放连接。</p>
+                        <br>
+                        <h3 class="heading-3">排序定时器双向链表和定时器堆</h2>
+                           <p>1.使用排序双向链表实现定时器，定时器在双向链表中按照超时时间进行排序，因此插入、修改、删除定时器的时间复杂度都是(O(n))。</p>
+                           <p>2.使用堆实现定时器，进行堆排序，插入和修改等操作的时间复杂度是(O(log(n)))。</p>
+                           <p>在访问量很大，同时对服务器的性能要求很高的情况下，使用时间轮定时器，能将定时器插入和删除的时间复杂度降低到(O(1))</p>
+                     <h2 class="heading-2">多级时间轮定时器的实现</h2>
+                        <h3 class="heading-3">定时器</h3>      
+                           <p>一个定时器对应一个文件描述符的任务，有对应的执行时间，还定义了其是否是一个重复执行的任务</p>
+<pre class=" language-javascript mb-60"><code class=" language-c++">// timer.h
+typedef function&ltvoid()&gt TimerTask;
+
+class Timer {
+   int fd_; // 定时器对应的文件描述符
+   int execute_time_ms_; // 定时器任务的执行时间
+   int interval_ms_; // 重复执行任务的间隔
+   TimerTask task_;  // 定时器任务
+   bool repeated_; // 是否重复执行
+};
+</code></pre>
+                        <h3 class="heading-3">时间轮</h3>      
+                           <p>一个时间轮就像一个表盘，有刻度和指针，每个周期有规定的时间间隔和刻度的数量，指针在周期内跳动，每到一个刻度就执行该刻度内存的任务。</p>
+                           <figure class="image-medium"><img src="../assets/images/timewheel-1.jpg" alt="blog-img" /></figure>
+<pre class=" language-javascript mb-60"><code class=" language-c++">// time_wheel.h
+typedef shared_ptr<Timer> TimerPtr;
+
+class TimeWheel {
+   string name_;
+   int time_pos_; // 表针当前刻度
+
+   int scales_; 刻度数量
+   int step_ms_; 刻度大小
+
+   vector&ltvector&ltTimerPtr&gt&gt slots_; // 每个刻度的定时器列表
+
+   TimeWheel* next_; // 下一个时间轮
+   TimeWheel* prev_; // 上一个时间录
+};
+</code></pre>
+
+                        <h3 class="heading-3">多级时间轮</h3>      
+                           <p>如果在需要很多个刻度的情况下，只使用一个时间轮，那这个时间轮将会很“大”，浪费很多空间。使用多级时间轮，可以更高效的利用空间。</p>
+                           <figure class="image-medium"><img src="../assets/images/timewheel-2.jpg" alt="blog-img" /></figure>
+<pre class=" language-javascript mb-60"><code class=" language-c++">// time_sheduler.h
+typedef shared_ptr<TimeWheel> TimeWheelPtr;
+
+class TimeScheduler {
+   uint32_t step_ms_; // 最小刻度
+
+   mutex mtx_; // 线程同步锁
+   thread thread_; // 时间轮转动进程
+
+   bool is_stop_;
+
+   vector&ltTimeWheelPtr&gt time_wheels_; // 时间轮列表
+   
+   unordered_map&ltint, TimerPtr&gt ref_; // 文件描述符&定时器映射
+};
+</code></pre>
+
+                        <h3 class="heading-3">初始化时间轮</h3>      
+                           <p>在初始化时间轮时，根据定时任务的时间长度，使用不同等级的时间轮(1.毫秒级，2.秒级，3.分级，4.时级)，任务时长越长，应该使用的等级越高。不同等级的时间轮有两个TimeWheel*指针分别指向上一级时间轮和下一级时间轮。</p>
+<pre class=" language-javascript mb-60"><code class=" language-c++">// time_sheduler.cpp
+TimeScheduler::TimeScheduler(int step_ms, int level) : 
+step_ms_(step_ms), 
+is_stop_(false) {
+      assert(level > 0);
+      if(level > 3) { // 时级
+         AddTimeWheel("Hour", 24, 60 * 60 * 1000);
+      }
+      if(level > 2) { // 分级
+         AddTimeWheel("Minute", 60, 60 * 1000);
+      } 
+      if(level > 1) { // 秒级
+         AddTimeWheel("Second", 60, 1000);
+      }
+      // 毫秒级
+      AddTimeWheel("Millisecond", 1000 / step_ms, step_ms);
+}
+
+void TimeScheduler::AddTimeWheel(const string& name, int scales, int scale_unit_ms) {
+   TimeWheelPtr time_wheel = make_shared&ltimeWheel&gt(name, scales, scale_unit_ms);
+   if(time_wheels_.size() == 0) {
+       time_wheels_.push_back(time_wheel);
+       return;
+   }
+
+   TimeWheelPtr prev_time_wheel = time_wheels_.back();
+   prev_time_wheel->SetNextTimeWheel(time_wheel.get());
+   time_wheel->SetPrevTimeWheel(prev_time_wheel.get());
+   time_wheels_.push_back(time_wheel);
+}
+
+TimeWheelPtr TimeScheduler::GetFirstTimeWheel() {
+   assert(time_wheels_.size() > 0);
+
+   return time_wheels_.front();
+}
+
+TimeWheelPtr TimeScheduler::GetLastTimeWheel() {
+   assert(time_wheels_.size() > 0);
+
+   return time_wheels_.back();
+}
+</code></pre>
+
+                        <h3 class="heading-3">插入定时器</h3>      
+                           <p>此时有一个新的任务需要在时间t后执行，创建相应的定时器，然后需要把定时器递归插入它应该存在时间轮中。首先从最大的时间轮开始，如果t大于该时间轮的刻度，则可以将该定时器插入此时间轮对应位置，如果t小于该时间轮的刻度，则尝试插入下一个时间轮。</p>
+                           <figure class="image-medium"><img src="../assets/images/timewheel-3.jpg" alt="blog-img" /></figure>
+<pre class=" language-javascript mb-60"><code class=" language-c++">// time_sheduler.cpp
+void TimeScheduler::CreateTimerTask(int fd, int time_ms, const TimerTask& task) {
+   if (time_wheels_.empty()) {
+         return;
+   }
+
+   lock_guard<mutex> locker(mtx_);
+   int execute_time_ms = Timer::GetTimeNow() + time_ms;
+   TimerPtr timer(new Timer(fd, execute_time_ms, time_ms, task)); // 创建定时器
+   ref_[fd] = timer; // 建立映射
+   GetFirstTimeWheel()->InsertTimer(timer); 插入定时器
+}
+</code></pre>
+
+<pre class=" language-javascript mb-60"><code class=" language-c++">// time_wheel.cpp
+void TimeWheel::InsertTimer(TimerPtr timer) {
+   int next_time_wheel_time = 0;
+   if(next_ != nullptr) {
+         next_time_wheel_time = next_->GetCurrentTime();
+   }
+
+   int diff = timer->GetExecuteTime() + next_time_wheel_time - Timer::GetTimeNow(); // 定时任务执行时间 - 当前时间
+
+   if(diff >= step_ms_) { // diff大于该时间轮刻度
+         int pos = (time_pos_ + diff / step_ms_) % scales_;
+         slots_[pos].push_back(timer);
+   }
+   else if(next_ != nullptr) { // 如果有下一级时间轮，进行递归
+         next_->InsertTimer(timer);
+   }
+   else { // 仍然小于最低级时间轮刻度，插入最低级时间轮当前index位置
+         slots_[time_pos_].push_back(timer);
+   }
+}
+</code></pre>
+
+                        <h3 class="heading-3">时间轮运行</h3>      
+                           <p>挂在墙上的钟，秒钟走一圈，分针走一格，分级时间轮也是一样。我们定义小的时间轮的刻度为最小刻度，每过一个最小刻度，该时间点上的定时器都会从时间轮中取出，然后运行定时任务。刻度小的时间轮运行满一个周期，比它大一级的时间轮就会走一个刻度，然后把它该刻度上的定时器插入小的时间轮中。</p>
+<pre class=" language-javascript mb-60"><code class=" language-c++">// time_wheel.cpp
+void TimeWheel::Tick() {
+   time_pos_++;
+   if(time_pos_ < scales_) return;
+
+   time_pos_ %= scales_;
+   if(prev_ != nullptr) {
+         prev_->Tick();
+         auto slot = move(prev_->MoveCurrentSlot());
+         for(TimerPtr timer: slot) {
+            InsertTimer(timer);
+         }
+   }
+}
+</code></pre>
+
+                        <h3 class="heading-3">时间轮处理http连接</h3>      
+                           <p>在Linux服务器中，我们要使用时间轮来处理长时间非活动的连接，需要将关闭socket连接的的任务定时器插入时间轮中，但此时如果有在未达到超时时间又重新发送读写事件的连接，则需要延长他们的关闭时间，在这里使用的策略是将该定时器设置为重复执行，然后在该定时器需要执行定时任务时选择不执行，再将其设置为不重复执行，重新插入时间轮中。</p>
+<pre class=" language-javascript mb-60"><code class=" language-c++">// time_scheduler.cpp
+void TimeScheduler::Run() {
+   while(true) {
+         this_thread::sleep_for(MS(step_ms_));
+
+         lock_guard<mutex> locker(mtx_);
+
+         if(is_stop_) break;
+         TimeWheelPtr least_time_wheel = GetLastTimeWheel();
+         least_time_wheel->Tick();
+         vector<TimerPtr> slot = move(least_time_wheel->MoveCurrentSlot()); // 取出定时器
+         for(const TimerPtr& timer: slot) {
+            if (timer->GetRepeated()) { // 连接重新活动
+               // timer->Execute();
+               timer->Update(); // 更新定时器
+               GetFirstTimeWheel()->InsertTimer(timer); // 重新插入时间轮
+               continue;
+            }
+            timer->Execute();
+         }
+   }
+}
+</code></pre>
+
+<pre class=" language-javascript mb-60"><code class=" language-c++">// timer.h
+void SetRepeated() {
+   repeated_ = true;
+}
+
+void CancelRepeated() {
+   repeated_ = false;
+}
+
+int GetRepeated() const{
+   return repeated_;
+}
+
+void Update() {
+   execute_time_ms_ = GetTimeNow() + interval_ms_;
+   CancelRepeated();
+}
+</code></pre>
+
+                  </div>
+                  <div class="tags-social-meta mb-5 row">
+                     <div class="col-md-6">
+                        <div class="tags">
+                           <span class="float-left"><i class="fa fa-tag" aria-hidden="true"></i> Tags:</span>
+                           <ul class="list-inline">
+                              <li class="list-inline-item"><a href="/web">Web</a></li>
+                              <li class="list-inline-item"><a href="/cpp">Cpp</a></li>
+                              <li class="list-inline-item"><a href="/linux">Linux</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="social-icon float-md-right">
+                           <span class="float-left"></span>
+                           <ul class="list-inline float-left">
+                              <button class="button" onclick="copyToClip('test')">Share it!</button>
+                              <script>
+                                 function copyToClip(content, message) {
+                                    var aux = document.createElement("input");
+                                    aux.setAttribute("value", content);
+                                    document.body.appendChild(aux);
+                                    aux.select();
+                                    document.execCommand("copy");
+                                    document.body.removeChild(aux);
+                                    if (message == null) {
+                                       alert("The link to this page has been successfully copied to the clipboard!");
+                                    } else {
+                                       alert(message);
+                                    }
+                                 }
+                              </script>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="comment-wrapper">
+                     <div class="section-title mb-4 mt-4">
+                        <h3 class="heading-3">Post a Comment</h3>
+                     </div>
+                     <div class="comment-form">
+                           <form action="" method="post">                                    
+                                 <div class="form-row">
+                           <div class="col-md-6">
+                          <div class="input-group"><input type="text" maxlength="30" name="name" placeholder="Your Name" /></div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="input-group"><input type="text" maxlength="30" name="email" placeholder="Your Email" class="float-right" /></div>
+                        </div>
+                       </div>
+                        <div class="form-row"><div class="col-md-12"><div class="form-group"><textarea name="comment_content" placeholder="Type Comment" maxlength="500"></textarea></div></div></div>
+                        <script>
+                           function CommentComplete()
+                           {
+                              alert("Comment success!");
+                           }
+                        </script>
+                                 <div class="form-row"><button type="submit" class="btn-submit mt-2" onclick="CommentComplete()">Add Comment</button></div>
+                           </form>								 
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</main>
+<!-- ======================== END MAIN CONTENT AREA HERE ========================-->
+<!-- ==================== START FOOTER AREA ===================================== -->
+<footer>
+   <div class="footer-area clearfix ">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-6">
+               <div class="row">
+                  <div class="col-sm-6">
+                     <div class="footer-widget">
+                        <div class="footer-logo-img pb-3">
+                           <a href="/"><img src="../assets/images/logo.png" alt="footer-logo" /></a>
+                        </div>
+                        <div class="widget-details">
+                           <p>Follow me!</p>
+                           <div class="social-icon">
+                              <ul class="list-inline">
+                                 <li><a href="https://github.com/zhangbc12">
+                                    <img src="../assets/images/github-logo.png" />
+                                 </a></li>
+                                 <li><a href="https://www.instagram.com/z_100c/">
+                                    <img src="../assets/images/instagram-logo.png" />
+                                 </a></li>
+                                 <li><a href="https://facebook.com/zhangbaichuan12">
+                                    <img src="../assets/images/facebook-logo.png" />
+                                 </a></li>
+                                 <li><a href="https://twitter.com/BaichuanZhang6">
+                                    <img src="../assets/images/twitter-logo.png" />
+                                 </a></li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col">
+         <div class="footer-bottom text-center">
+            <p>MyBlog demo -Bc</p>
+         </div>
+      </div>
+   </div>
+</footer>
+<!-- ==================== END FOOTER AREA HERE ===================================== -->
+<!-- ====================ALL JS FILE HERE===================================== -->
+<!-- jQuery -->
+<script src="../assets/js/jquery-3.3.1.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="../assets/js/bootstrap.min.js"></script>
+<!-- responsive-menu. -->
+<script src="../assets/js/responsive-menu.js"></script>
+<!-- scrollUp  JS -->
+<script src="../assets/js/jquery.scrollUp.min.js"></script>
+<!-- lightbox js -->
+<script src="../assets/js/lightbox.min.js"></script>
+<!-- carousel js -->
+<script src="../assets/js/owl.carousel.min.js"></script>
+<!-- wow JS -->
+<script src="../assets/js/aos.min.js"></script>
+<!-- main  JS -->
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

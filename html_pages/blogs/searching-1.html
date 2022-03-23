@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!-- Title -->
+   <title>MyBlog-Searching-1</title>
+   <!-- Favicon -->
+
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+   <!--Responsive Menu  CSS -->
+   <link rel="stylesheet" href="../assets/css/responsive-menu.css" />
+   <!-- lightbox CSS -->
+   <link rel="stylesheet" href="../assets/css/lightbox.min.css">
+   <!-- Prism CSS -->
+   <link rel="stylesheet" href="../assets/css/prism.css">
+   <!-- Owl carousel CSS -->
+   <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+   <!-- Font awesome CSS -->
+   <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
+   <!-- Aos CSS -->
+   <link rel="stylesheet" href="../assets/css/aos.css">
+   <!-- Main CSS -->
+   <link rel="stylesheet" href="../assets/css/style.css">
+   <!-- Google font -->
+   <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700" rel="stylesheet">
+</head>
+<body>
+<!-- ==================== PRELOADER HERE ===================================== -->
+<div class="overlay-loader">
+   <img src="../assets/images/805.gif" alt="loader" />
+</div>
+<!-- ==================== PRELOADER END ===================================== -->
+<!-- ======================== START HEADER AREA HERE ====================================== -->
+<header class="themeix-header  clearfix">
+   <div class="themeix-header-navigation bg-color">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-12">
+               <div class="themeix-navbar">
+                  <div class="themeix-logo float-left">
+                     <a class="themeix-brand" href="/"><img src="../assets/images/logo-white.png" alt="Header Logo"></a>
+                  </div>
+                  <div class="header-container highlight">
+                     <nav class="themeix-menu float-right">
+                        <ul id="navigation-menu" class="slimmenu">
+                           <li><a href="/">Home</a></li>
+                           <!--                                 <li><a href="/picture">Pictrue</a></li>-->
+                           <li class="has-submenu">
+                                    <a href="/tags">Articles</a>
+                                    <ul>
+                                       <li><a href="/algorithm">Algorithm</a></li>
+                                       <li><a href="/linux">Linux</a></li>
+                                 <li><a href="/cpp">Cpp</a></li>
+                                 <li><a href="/web">Web</a></li>
+                                 <li><a href="/deeplearning">Deep Learning</a></li>
+                                    </ul>
+                                 </li>
+                           <li><a href="/video">Video</a></li>
+                           <li class="has-submenu">
+                              <a href="/author">Author</a>
+                              <ul>
+                                 <li><a href="/author">Author Page</a></li>
+                                 <li><a href="/cv">CV</a></li>
+                                 <!-- <li><a href="/contact">Message</a></li> -->
+                              </ul>
+                           </li>
+                        </ul>
+                        <div class="navigation-sidebar">
+                           <button class="openbtn" onclick="openNav()"><img src="../assets/images/menu-icon.png" alt="menu-icon" /></button>
+                        </div>
+                     </nav>
+
+                     <div id="mySidepanel" class="sidepanel">
+                        <ul class="list-inline pt-4">
+                           <li><a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a></li>
+                           <li><a href="/login">Login</a></li>
+                           <li><a href="/register">Register</a></li>
+
+                        </ul>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="header-bottom page-title">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-9 mx-auto">
+               <div class="header-text text-center">
+                  <span>18 March, 2022</span>
+                  <h1 class="heading-1 mb-5 pt-1" data-aos="zoom-in">搜索算法Ⅰ-Uninformed Search</h1>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="header-shape">
+      <img class="shape1" src="../assets/images/Shape_01.png" alt="shape animated"/>
+      <img class="shape2" src="../assets/images/Shape_02.png" alt="shape animated"/>
+      <img class="shape3" src="../assets/images/Shape_03.png" alt="shape animated"/>
+   </div>
+</header>
+<!-- ======================== END HEADER AREA HERE ================================= -->
+<!-- =================== START MAIN CONTENT AREA HERE ========================-->
+<main class="main-content-area section-padding-bottom">
+   <div class="container">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="row">
+               <div class="col-md-10 mx-auto n-margin">
+                  <div class="entry-content">
+                     <h2 class="heading-2">Searching Problem的分类与定义</h2>
+                        <p>搜索的问题根据搜索的条件、限制和目标的不同，可以有以下几类定义:<br>
+                           1. Uninformed Search(盲目搜索)<br>
+                           2. Informed Search(知情搜索)<br>
+                           3. Local Search(局部搜索)<br>
+                        </p>
+                        <p>要解决搜索问题，首先需要明白如何去定义这个问题<br>
+                           1. States: 构成状态的详细信息<br>
+                           2. Initial state: 初始状态<br>
+                           3. Actions: 可以进行的操作<br>
+                           4. Transition: 状态的转移<br>
+                           5. Cost: 路径的成本函数<br> 
+                           解决搜索问题的方案就是将初始状态转换为目标状态的一系列动作。
+                        </p>
+                        <br>
+                     <h2 class="heading-2">Uninformed Search</h2>
+                     <p>Uninformed Search(盲目搜索)是指除了问题本身的定义之外，没有其他附加信息的一种搜索。</p>
+                     <br>
+                     <h3 class="heading-3">Breadth-first search(BFS)</h3>
+                     <br>
+                     <figure class="image-medium"><img src="../assets/images/searching-1-1.jpg" alt="blog-img" /></figure>
+                     <p>广度优先搜索BFS的搜索策略是先探索在搜索空间中比较“浅”的节点。</p>
+                     <p>考虑下面的状态空间图，S是搜索的起始节点，G是搜索的目标节点，假设一个节点的子节点的入队顺序是按照字母来排的。</p>
+                     <p>在实现时，可以使用set来记录已经探索过的节点，避免重复计算。</p>
+                     <figure class="image-medium"><img src="../assets/images/searching-1-0.jpg" alt="blog-img" /></figure>
+                     <br>
+                     <p>上图中，S为起始节点，G为目标节点，连线表示两点能够连通，需要解决的问题是找到从S到G的路径。</p>
+
+<pre class=" language-javascript mb-60"><code class=" language-javascript">// BFS
+import collections
+def bfsGsa(stateSpaceGraph, startState, goalState): 
+      frontier = collections.deque([startState])
+      exploredSet = set()
+      print('Initial frontier:',list(frontier))
+      input()
+      while frontier: 
+         node = frontier.popleft()
+         if (node.endswith(goalState)): return node
+         if node[-1] not in exploredSet:
+            print('Exploring:',node[-1],'...')
+            exploredSet.add(node[-1])
+            for child in stateSpaceGraph[node[-1]]: frontier.append(node+child)
+            print(list(frontier))
+            print(exploredSet)
+            input()
+practice = {
+      'S':['a','d','G'],'a':['b'], 'd':['b','e'],'G':[],'b':['e','c'],
+      'e':['G'],'c':['G']}
+print('Solution path:',bfsGsa(practice, 'S', 'G'))
+</code></pre>
+                  
+                     <br>
+                     <p>运行结果为：</p>
+                     <div class="col-md-5 mb-60">
+                        <figure class="image-medium"><img src="../assets/images/searching-1-1-1.jpg" alt="blog-img" /></figure>
+                     </div>
+                     
+                     <h3 class="heading-3">Depth-first search(DFS)</h3>
+                     <br>
+                     <figure class="image-medium"><img src="../assets/images/searching-1-2.jpg" alt="blog-img" /></figure>
+                     <p>深度优先搜索DFS的搜索策略是先探索在搜索空间中比较“深”的节点。</p>                  
+
+<pre class=" language-javascript mb-60"><code class=" language-javascript">// DFS
+import collections
+def dfsGsa(stateSpaceGraph, startState, goalState): 
+      frontier = collections.deque([startState])
+      exploredSet = set()
+      print('Initial frontier:',list(frontier))
+      input()
+      while frontier: 
+         node = frontier.pop()
+         if (node.endswith(goalState)): return node
+         if node[-1] not in exploredSet:
+            print('Exploring:',node[-1],'...')
+            exploredSet.add(node[-1])
+            for child in stateSpaceGraph[node[-1]]: frontier.append(node+child)
+            print(list(frontier))
+            print(exploredSet)
+            input()
+practice = {
+      'S':['a','d','G'],'a':['b'], 'd':['b','e'],'G':[],'b':['e','c'],
+      'e':['G'],'c':['G']}
+print('Solution path:',dfsGsa(practice, 'S', 'G'))   
+</code></pre>
+                     <p>运行结果为：</p>
+                     <div class="col-md-5 mb-60">
+                        <figure class="image-medium"><img src="../assets/images/searching-1-2-1.jpg" alt="blog-img" /></figure>
+                     </div>
+
+                     <h3 class="heading-3">Uniform-cost search(UCS)</h3>
+                     <br>
+                     <figure class="image-medium"><img src="../assets/images/searching-1-3.jpg" alt="blog-img" /></figure>
+                     <p>UCS指的搜索策略是先探索在搜索空间中cost最低的节点，在代码实现时，需要使用到优先队列这个数据结构，cost低的点优先出栈。</p>
+
+<pre class=" language-javascript mb-60"><code class=" language-javascript">// UCS
+from heapq import heappush, heappop
+def ucsGsa(stateSpaceGraph, startState, goalState): 
+      frontier = []
+      heappush(frontier, (0, startState))
+      exploredSet = set()
+      print('Initial frontier:',list(frontier)); input()
+      while frontier:
+         node = heappop(frontier)
+         if (node[1].endswith(goalState)): return node
+         if node[1][-1] not in exploredSet:
+            print('Exploring:',node[1][-1],'at cost',node[0])
+            exploredSet.add(node[1][-1])
+            for child in stateSpaceGraph[node[1][-1]]:
+                  heappush(frontier, (node[0]+child[0], node[1]+child[1]))
+            print(list(frontier)); print(exploredSet); input()
+practice = {
+      'S':[(3,'a'),(2,'d'),(10,'G')],'a':[(5,'b')],
+      'd':[(1,'b'),(4,'e')],'G':[],'b':[(1,'e'),(2,'c')],
+      'e':[(3,'G')],'c':[(4,'G')]}
+print('Solution path:',ucsGsa(practice, 'S', 'G'))  
+</code></pre>
+                     <p>运行结果为：</p>
+                     <figure class="image-medium"><img src="../assets/images/searching-1-3-1.jpg" alt="blog-img" /></figure>
+                     <br>
+
+                     <h3 class="heading-3">Uninformed Search方法对比</h3>
+                     <p>当目标节点离根节点近时，BFS优于DFS。</p>
+                     <p>当目标节点很深时，DFS优于BFS。</p>
+                     <p>当可以得到代价函数时，UCS能更快地以更小的代价找到目标节点。</p>
+                     <br>
+                     <p>下一篇：<a href="/blogs/searching-2">搜索算法Ⅱ-Informed Search</a></p>
+
+                  </div>
+                  <div class="tags-social-meta mb-5 row">
+                     <div class="col-md-6">
+                        <div class="tags">
+                           <span class="float-left"><i class="fa fa-tag" aria-hidden="true"></i> Tags:</span>
+                           <ul class="list-inline">
+                              <li class="list-inline-item"><a href="/algorithm">Algorithm</a></li>
+                              <li class="list-inline-item"><a href="/deeplearning">Deep Learning</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="social-icon float-md-right">
+                           <span class="float-left"></span>
+                           <ul class="list-inline float-left">
+                              <button class="button" onclick="copyToClip('test')">Share it!</button>
+                              <script>
+                                 function copyToClip(content, message) {
+                                    var aux = document.createElement("input");
+                                    aux.setAttribute("value", content);
+                                    document.body.appendChild(aux);
+                                    aux.select();
+                                    document.execCommand("copy");
+                                    document.body.removeChild(aux);
+                                    if (message == null) {
+                                       alert("The link to this page has been successfully copied to the clipboard!");
+                                    } else {
+                                       alert(message);
+                                    }
+                                 }
+                              </script>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="comment-wrapper">
+                     <div class="section-title mb-4 mt-4">
+                        <h3 class="heading-3">Post a Comment</h3>
+                     </div>
+                     <div class="comment-form">
+                           <form action="" method="post">                                    
+                                 <div class="form-row">
+                           <div class="col-md-6">
+                          <div class="input-group"><input type="text" maxlength="30" name="name" placeholder="Your Name" /></div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="input-group"><input type="text" maxlength="30" name="email" placeholder="Your Email" class="float-right" /></div>
+                        </div>
+                       </div>
+                        <div class="form-row"><div class="col-md-12"><div class="form-group"><textarea name="comment_content" placeholder="Type Comment" maxlength="500"></textarea></div></div></div>
+                        <script>
+                           function CommentComplete()
+                           {
+                              alert("Comment success!");
+                           }
+                        </script>
+                                 <div class="form-row"><button type="submit" class="btn-submit mt-2" onclick="CommentComplete()">Add Comment</button></div>
+                           </form>								 
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</main>
+<!-- ======================== END MAIN CONTENT AREA HERE ========================-->
+<!-- ==================== START FOOTER AREA ===================================== -->
+<footer>
+   <div class="footer-area clearfix ">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-6">
+               <div class="row">
+                  <div class="col-sm-6">
+                     <div class="footer-widget">
+                        <div class="footer-logo-img pb-3">
+                           <a href="/"><img src="../assets/images/logo.png" alt="footer-logo" /></a>
+                        </div>
+                        <div class="widget-details">
+                           <p>Follow me!</p>
+                           <div class="social-icon">
+                              <ul class="list-inline">
+                                 <li><a href="https://github.com/zhangbc12">
+                                    <img src="../assets/images/github-logo.png" />
+                                 </a></li>
+                                 <li><a href="https://www.instagram.com/z_100c/">
+                                    <img src="../assets/images/instagram-logo.png" />
+                                 </a></li>
+                                 <li><a href="https://facebook.com/zhangbaichuan12">
+                                    <img src="../assets/images/facebook-logo.png" />
+                                 </a></li>
+                                 <li><a href="https://twitter.com/BaichuanZhang6">
+                                    <img src="../assets/images/twitter-logo.png" />
+                                 </a></li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col">
+         <div class="footer-bottom text-center">
+            <p>MyBlog demo -Bc</p>
+         </div>
+      </div>
+   </div>
+</footer>
+<!-- ==================== END FOOTER AREA HERE ===================================== -->
+<!-- ====================ALL JS FILE HERE===================================== -->
+<!-- jQuery -->
+<script src="../assets/js/jquery-3.3.1.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="../assets/js/bootstrap.min.js"></script>
+<!-- responsive-menu. -->
+<script src="../assets/js/responsive-menu.js"></script>
+<!-- scrollUp  JS -->
+<script src="../assets/js/jquery.scrollUp.min.js"></script>
+<!-- lightbox js -->
+<script src="../assets/js/lightbox.min.js"></script>
+<!-- carousel js -->
+<script src="../assets/js/owl.carousel.min.js"></script>
+<!-- wow JS -->
+<script src="../assets/js/aos.min.js"></script>
+<!-- main  JS -->
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
