@@ -1,41 +1,6 @@
 (function ($) {
 	"use strict";
 
-/* carousel */	
-$('.post-carousel').owlCarousel({
-	dots:false,
-	nav:true,
-	margin:30,
-	navText:['<i class="fa fa-angle-double-left" aria-hidden="true"></i>','<i class="fa fa-angle-double-right" aria-hidden="true"></i>'],
-    responsive:{
-        0:{
-            items:1
-        },
-        600:{
-            items:2
-        },
-        1000:{
-            items:2
-        }
-    }
-});
-$('.banner-carousel').owlCarousel({
-	autoplay:true,
-	dots:false,
-	loop:true,
-	nav:false,
-    responsive:{
-        0:{
-            items:1
-        },
-        600:{
-            items:1
-        },
-        1000:{
-            items:1
-        }
-    }
-});
 
 /* search overlay */
  $('#close-btn').on('click', function () {
@@ -46,13 +11,6 @@ $('.banner-carousel').owlCarousel({
     $(this).hide();
     $('#search-overlay').fadeIn();
   });
-
-/* slimmenu */
-$('.slimmenu').slimmenu({
-        resizeWidth: '991',
-        animSpeed: 'medium',
-        indentChildren: true,
-    });
 
 /* scrollUp */
     jQuery.scrollUp({
@@ -65,28 +23,6 @@ $('.slimmenu').slimmenu({
     scrollText: '<i class="fa fa-long-arrow-up" aria-hidden="true"></i>', 
     activeOverlay: false, 
   });
-  
- /*  aos js*/
-AOS.init({
-  disable: false, 
-  startEvent: 'DOMContentLoaded', 
-  initClassName: 'aos-init', 
-  offset: 120, 
-  delay: 0, 
-  duration: 400, 
-  easing: 'ease', 
-  once: true, 
-  mirror: false, 
-  anchorPlacement: 'top-bottom',
-
-});
-
-
-
-
-
-
-
 
 	// Fit ideos
 	var $allVideos = $(".videoWrapper iframe"),

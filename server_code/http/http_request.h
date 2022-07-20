@@ -14,8 +14,6 @@
 # include "../record/message.h"
 # include "../record/comment.h"
 # include "../record/log.h"
-
-
 using namespace std;
 
 class HttpRequest {
@@ -60,6 +58,8 @@ private:
     static void SaveMessage(const string& name, const string& email, const string& message_content);
 
     static void SaveComment(const string& blog_name, const string& name, const string& email, const string& message_content);
+
+    static void SaveImage(const string& img_base64);
 
     enum PARSE_STATE {
         REQUEST_LINE,
