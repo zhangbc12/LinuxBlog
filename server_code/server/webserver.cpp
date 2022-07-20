@@ -20,7 +20,6 @@ Webserver::Webserver(int port, bool opt_linger, int trig_mode, int log_level, in
     ConnectPool::GetInstance()->Init("localhost", client, db_name, db_pwd, sql_port, connect_pool_num);
     Message::GetInstance()->Init("./message/", ".log");
     Comment::GetInstance()->Init("./comment/", ".log");
-
     InitEventMode(trig_mode);
     if(!InitSocket()) {
         is_close_ = true;
@@ -38,7 +37,6 @@ Webserver::Webserver(int port, bool opt_linger, int trig_mode, int log_level, in
                         (conn_event_ & EPOLLET ? "ET": "LT"));
         LOG_INFO("LogSys level: %d", log_level);
     }
-
     time_wheel_->Start();
 } 
 
@@ -83,10 +81,13 @@ bool Webserver::InitSocket() {
             return false;
         }
     }
+
+    // htonl,htons将主机字节顺序转换为网络字节顺序
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = htonl(INADDR_ANY);
     addr.sin_port = htons(port_);
 
+    // 优雅断开链接
     struct linger opt_linger = {0};
     if(open_linger_) {
         opt_linger.l_onoff = 1;
@@ -143,6 +144,7 @@ bool Webserver::InitSocket() {
 
 int Webserver::SetFdNonblock(int fd) {
     assert(fd > 0);
+    // O_NONBLOCK 非阻塞I/O;如果read调用没有可读取的数据,或者如果write操作将阻塞,read或write调用返回-1
     return fcntl(fd, F_SETFL, fcntl(fd, F_GETFD, 0) | O_NONBLOCK);
 }
 
@@ -152,7 +154,6 @@ void Webserver::Run() {
         LOG_INFO("========== Server start =========="); 
         cout<<"MyBlog can be visited now!"<<endl;
     }
-    
     while(!is_close_) {
         if(timeout_ms_ > 0) {
             timeMS = time_step_;

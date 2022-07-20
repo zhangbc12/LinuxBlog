@@ -6,7 +6,7 @@ using namespace std;
 const unordered_set<string> HttpRequest::kDefaultHtml {
             "/index", "/register", "/login",
              "/welcome", "/video", "/tags", 
-             "/author", "/cv", "/contact"
+             "/author", "/cv", "/contact", "/file"
              };
 
 const unordered_set<string> HttpRequest::kArticleTag {
@@ -15,7 +15,8 @@ const unordered_set<string> HttpRequest::kArticleTag {
              };
 
 const unordered_map<string, int> HttpRequest::kHtmlTag {
-            {"/register.html", 0}, {"/login.html", 1},  {"/contact.html", 2}
+            {"/register.html", 0}, {"/login.html", 1},  
+            {"/contact.html", 2}, {"/file.html", 3}
             };
 
 const string HttpRequest::kMessageFolder = "/message/";
@@ -153,6 +154,10 @@ void HttpRequest::ParsePost() {
                 SaveMessage(post_["name"], post_["email"], post_["message_content"]);
                 path_ = "/index.html";
             }
+            else if(tag == 3) {
+                SaveImage(post_["img_base64"]);
+                path_ = "/welcome.html";
+            }
         }
         else if(path_.size() > 7 && path_.substr(0, 7) == "/blogs/") {
             int begin_pos = path_.find_last_of("/");
@@ -166,6 +171,10 @@ void HttpRequest::ParsePost() {
 void HttpRequest::ParsePostContent() {
     int n = body_.size();
     if(n == 0) return;
+    if(path_ == "/file.html") {
+        post_["img_base64"] = body_;
+        return;
+    }
 
     string key, value;
 
@@ -248,6 +257,10 @@ void HttpRequest::SaveMessage(const string& name, const string& email, const str
 
 void HttpRequest::SaveComment(const string& blog_name, const string& name, const string& email, const string& comment_content) {
     Comment::GetInstance()->WriteComment(blog_name, name, email, comment_content);
+}
+
+void HttpRequest::SaveImage(const string& img_base64) {
+    LOG_DEBUG(img_base64.c_str());
 }
 
 string HttpRequest::GetPath() const {
